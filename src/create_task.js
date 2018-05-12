@@ -46,14 +46,11 @@ export default class Main extends Component{
   static navigationOptions = function(props) {
     return {
       title: 'Create Task',
-      headerStyle: {backgroundColor: '#4C3E54'},
-      headerTintColor: 'white',
       headerLeft:
       <Icon
         onPress={() => props.navigation.navigate('DrawerOpen')}
         size={35}
         name='menu'
-        color='#fff'
       />
     }
   }

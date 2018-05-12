@@ -24,40 +24,36 @@ export default class Main extends Component{
         this.state = {
             newTask: "",
             email: firebaseApp.auth().currentUser.email,
-            dataSource: {}
+            dataSource: [],
         };
     }
     static navigationOptions = function(props) {
       return {
         title: 'Your tasks',
-        headerStyle: {backgroundColor: '#4C3E54'},
-        headerTintColor: 'white',
         headerLeft:
         <Icon
           onPress={() => props.navigation.navigate('DrawerOpen')}
           size={35}
           name='menu'
-          color='#fff'
         />
       }
     }
 
   componentDidMount(){
-    var friends = []
+    this._listenTasks()
+  }
+
+  _listenTasks(){
+    var test = []
     this.tasksRef.on('value', snapshot => {
-      snapshot.forEach((child) => {
-        console.log(friends)
-        friends.push(
-          {
-            key: child.key,
-            task: child.val().name
-          }
-        )
-      });
+    snapshot.forEach((child) => {
+      test.push({
+        key: child.key,
+        title: child.val().title,
+      })
     });
-      this.setState({dataSource: friends})
-    console.log(this.state.dataSource)
-    console.log("XXXX")
+    this.setState({dataSource: test})
+    });
   }
 
 
@@ -75,12 +71,11 @@ export default class Main extends Component{
     render(){
         return(
             <View style = {styles.container}>
-            <FlatList
-             data={this.state.dataSource}
-             renderItem={({item}) => this._renderItem(item)}
-             />
+              <FlatList
+               data={this.state.dataSource}
+               renderItem={({item}) => this._renderItem(item)}
+               />
             </View>
-
         );
       }
 }

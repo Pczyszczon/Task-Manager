@@ -1,10 +1,9 @@
 import firebaseApp from './src/firebase_config';
 import Login from './src/login';
 import Main from './src/main';
-import Logout from './src/logout'
+import AccDetails from './src/AccDetails'
 import Screen1 from './screen1';
 import CreateTask from './src/create_task';
-import Screen3 from './screen3';
 import {TabNavigator, StackNavigator, DrawerNavigator} from 'react-navigation';
 import { Icon } from 'react-native-elements';
 
@@ -54,7 +53,7 @@ export default class App extends Component {
   })
 
   export const test2 = StackNavigator({
-    screen3: { screen: Logout },
+    screen3: { screen: AccDetails },
   })
 
   export const LoginSreen = StackNavigator({

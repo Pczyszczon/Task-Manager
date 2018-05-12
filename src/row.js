@@ -11,7 +11,7 @@ export default class Row extends Component {
   render() {
     return (
       <View style={styles.rowContainer}>
-        <Text>{this.props.item.task}</Text>
+        <Text>{this.props.item.title}</Text>
       </View>
     );
   }
