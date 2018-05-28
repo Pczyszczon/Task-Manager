@@ -11,6 +11,7 @@ import {
 } from 'react-native-elements';
 import * as styles from './styles.js';
 import firebaseApp from './firebase_config';
+
 export default class ProjectListRow extends Component {
 
     addUserToSelectedProject(){

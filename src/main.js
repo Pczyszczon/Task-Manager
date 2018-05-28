@@ -28,6 +28,7 @@ export default class Main extends Component{
         this.projectsRef = firebaseApp.database().ref("TaskManager/Projects/");
         this.userRef = firebaseApp.database().ref("TaskManager/Users/" + firebaseApp.auth().currentUser.uid);
         this.state = {
+            tmp_hnadler: true,
             email: firebaseApp.auth().currentUser.email,
             dataSource: [],
         };
@@ -46,17 +47,13 @@ export default class Main extends Component{
     }
 
   componentDidMount(){
-      var user_project = null;
-      this.userRef.once("value", function(snapshot) {
-      if(snapshot.val().project == null){
-          this._listenProjects();
-          alert('no project found');
-      }
-      else{
-          this._listenTasks();
-          alert('project found');
-      }
-       });
+      // this.userRef.once("value", function(snapshot) {
+      //   if(snapshot.val().project == null){
+      //       this.setState({tmp_hnadler: false})
+      // }
+      // })
+      // this.state.tmp_hnadler == true ? this._listenTasks() : this._listenProjects();
+      this._listenProjects();
   }
 
   _listenTasks(){
@@ -88,38 +85,19 @@ export default class Main extends Component{
     });
   }
 
-
-  // PRZESZUKIWANIE PROJEKTÓW - DO CZASU AŻ LENIWY CHUJEK ZROBI NODA Z USERAMI XDXDXXDXDXDDXDXXDdXDXD
-  // _listenTasks(){
-  //   var test = []
-  //   this.tasksRef.on('value', snapshot => {
-  //   snapshot.forEach((child) => {
-  //     test.push({
-  //       project_name: child.key,
-  //       project_content: child.val(),
-  //     })
-  //   });
-  //   console.log(test)
-  //   this.setState({dataSource: test})
-  //   });
-  // }
-
-  // tak jak z adminami w create project
-
-
   _renderItem(item){
-    let rowType = null;
-    this.userRef.once("value", function(snapshot) {
-        if(snapshot.val().project == null){
-            rowType = <ProjectListRow item = {item}/>
-
-        }
-    else{
-        rowType = <Row item = {item}/>
-    }
-     });
+    // let rowType = null;
+    // this.userRef.once("value", function(snapshot) {
+    //     if(snapshot.val().project == null){
+    //         rowType = <ProjectListRow item = {item}/>
+    //
+    //     }
+    // else{
+    //     rowType = <Row item = {item}/>
+    // }
+    //  });
     return (
-        {rowType}
+        <ProjectListRow item = {item}/>
     )
   }
 

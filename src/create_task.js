@@ -62,8 +62,18 @@ export default class Main extends Component{
                  task: false});
  }
 
- sendToFireBase(project){
-   firebaseApp.database().ref("TaskManager/Projects/" + project).push({
+ componentDidMount(){
+   this.setProject()
+ }
+
+ setProject(){
+   this.userRef.once("value", snapshot => {
+       this.setState({proj: snapshot.val().project});
+     });
+ }
+
+ sendToFireBase(){
+   firebaseApp.database().ref("TaskManager/Projects/" + this.state.proj).push({
        title: this.state.title.trim(),
        email: this.state.email,
        bug: this.state.bug,
@@ -71,16 +81,7 @@ export default class Main extends Component{
        task: this.state.task,
        description: this.state.description.trim(),
      });
- }
-
- handleCreate(){
-   var proj = null
-     this.userRef.once("value", function(snapshot) {
-       proj = snapshot.val().project
-     });
-     alert(proj);
-   this.sendToFireBase(proj);
-   this.setDefault();
+     this.setDefault();
  }
 
 
@@ -154,7 +155,7 @@ export default class Main extends Component{
           placeholderTextColor = "#D6D5C9"
         />
         <Button
-          onPress = {this.handleCreate.bind(this)}
+          onPress = {this.sendToFireBase.bind(this)}
           title="Send"
         />
       </ScrollView>
