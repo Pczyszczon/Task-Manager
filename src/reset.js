@@ -3,11 +3,11 @@ import{
     StatusBar,
     Text,
     View,
-    Button
 } from 'react-native';
 import {
   Input,
   Icon,
+  Button,
 } from 'react-native-elements';
 
 import firebaseApp from './firebase_config';
@@ -43,10 +43,12 @@ export default class PasswordReset extends Component{
                            }}
                            style = {styles.input}
                            keyboardType={'email-address'}
-                           placeholder = "Just remind us your email"/>
+                           placeholder = "Just remind us your email"
+                           placeholderTextColor = "#D6D5C9"/>
                 <Button
                     onPress = {() => this.handleReset()}
                     title="Reset"
+                    buttonStyle ={styles.mainButtons}
                 />
             </View>
         );

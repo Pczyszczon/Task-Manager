@@ -74,8 +74,9 @@ class Auth extends Component{
           style = {styles.input}
           keyboardType= {'email-address'}
           placeholder = "Enter your email"
+          placeholderTextColor = "#D6D5C9"
           leftIcon = {
-            {type: 'material-community', name: 'email'}
+            {type: 'material-community', name: 'email', color: "#D6D5C9"}
           }
         />
 
@@ -85,8 +86,9 @@ class Auth extends Component{
           onChangeText={(password) => {this.setState({password})}}
           style= {styles.input}
           placeholder = 'Enter your password'
+          placeholderTextColor = "#D6D5C9"
           leftIcon = {
-            {type: 'material-community',name: 'lock-open'}
+            {type: 'material-community',name: 'lock-open',color: "#D6D5C9"}
           }
           secureTextEntry = {true}
           returnKeyType = "go"
@@ -96,6 +98,7 @@ class Auth extends Component{
         <Button
           onPress = {() => this.handleLogin()}
           title="Login"
+          buttonStyle ={styles.mainButtons}
         />
 
         <Text style = {styles.instructions}>

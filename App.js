@@ -41,7 +41,7 @@ export default class App extends Component {
 }
 
   export const Root = StackNavigator({
-    DrawerStackXXX: {screen: Main},
+    DrawerStack: {screen: Main},
   })
 
   export const test = StackNavigator({

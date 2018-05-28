@@ -16,7 +16,7 @@ export default class AccDetails extends Component {
       headerLeft:
       <Icon
         onPress={() => props.navigation.navigate('DrawerOpen')}
-        size={35}
+        size={50}
         name='menu'
       />
     }
@@ -60,7 +60,7 @@ export default class AccDetails extends Component {
                   title="reset password"
                 />
                 <Button
-                  onPress={() => this.sendResetEmail()}
+                  onPress={() => this.handleLogOut()}
                   title="logout"
                 />
             </View>

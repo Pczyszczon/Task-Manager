@@ -4,13 +4,16 @@ import{
     Text,
     View,
     Button,
-    StyleSheet
+    StyleSheet,
+    Alert,
 } from 'react-native';
 
 import {
   Input,
   Icon,
 } from 'react-native-elements';
+
+import Egg from 'react-native-egg';
 
 import firebaseApp from './firebase_config';
 import * as styles from './styles.js';
@@ -47,9 +50,14 @@ export default class Create extends Component{
         return(
             <View style = {styles.container}>
                 <StatusBar barStyle="light-content" />
-
+                <Egg
+                    setps={'TTT'}
+                    onCatch={() => {
+                        Alert.alert('You are a wizzard Harry');
+                    }}
+                >
                 <Text style = {styles.title}>Create</Text>
-
+                </Egg>
                 <Input onChangeText={(email) => {this.setState({email})}}
                            autoCapitalize = 'none'
                            returnKeyType = {'next'}
@@ -59,11 +67,14 @@ export default class Create extends Component{
                            }}
                            style = {styles.input}
                            keyboardType={'email-address'}
-                           placeholder = "Enter email here my darling"/>
+                           placeholder = "Enter email"
+                           placeholderTextColor = "#D6D5C9"
+                            />
 
                 <Input ref = 'passwordInput' onChangeText={(password) => {this.setState({password})}}
                            style= {styles.input}
-                           placeholder = 'There should be password if you wanna feel save'
+                           placeholder = 'Password'
+                           placeholderTextColor = "#D6D5C9"
                            secureTextEntry = {true}
                            returnKeyType = {"next"}
                            onSubmitEditing = {(event) => {
@@ -73,6 +84,7 @@ export default class Create extends Component{
                 <Input ref = 'ConfirmPassword' onChangeText={(confirmPassword) => {this.setState({confirmPassword})}}
                            style = {styles.input}
                            placeholder = 'Please confirm your password'
+                           placeholderTextColor = "#D6D5C9"
                            secureTextEntry = {true}
                            returnKeyType = "go"
                            onSubmitEditing = {() => this.handleCreate()}/>
@@ -80,6 +92,7 @@ export default class Create extends Component{
                 <Button
                     onPress = {() => this.handleCreate()}
                     title="Create"
+                    buttonStyle ={styles.mainButtons}
                 />
             </View>
         );
