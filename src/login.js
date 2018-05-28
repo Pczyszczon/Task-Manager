@@ -49,7 +49,6 @@ class Auth extends Component{
   handleLogin(){
     var email = this.state.email;
     var password = this.state.password;
-    alert('asgasg');
     firebaseApp.auth()
       .signInWithEmailAndPassword(email, password)
       .catch(error => {

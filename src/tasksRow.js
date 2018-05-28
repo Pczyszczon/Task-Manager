@@ -92,9 +92,8 @@ export default class Row extends Component {
             else if(this.props.item.improvment){
                 message = improvment;
             }
-            // tylko na próbę - potem trzeba rozdzielić to na listę tasków i listę projektów
             else {
-                message = <Text>Piniz</Text>
+                message = <Text>{this.props.item.title}</Text>
             }
             var modalText = <Text>{this.props.item.description}</Text>
             return (

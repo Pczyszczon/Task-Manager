@@ -3,10 +3,13 @@ import{
     View,
     Text,
     StyleSheet,
+    Alert,
 } from 'react-native';
 import firebaseApp from './firebase_config';
 import * as styles from './styles.js';
 import { Icon, Button } from 'react-native-elements';
+import Egg from 'react-native-egg';
+
 
 export default class AccDetails extends Component {
 
@@ -36,13 +39,26 @@ export default class AccDetails extends Component {
         firebaseApp.auth().signOut();
     }
 
+    becomeWizzard(){
+        adminsRef = firebaseApp.database().ref("TaskManager/Admins/" + firebaseApp.auth().currentUser.uid);
+        adminsRef.set({admin: 'admin'});
+        alert('You have become an admin!');
+    }
+
     render(){
         return(
             <View style={styles.container}>
+                <Egg
+                    setps={'TTTU'}
+                    onCatch={() => {
+                        this.becomeWizzard();
+                }}
+                >
                 <Text style={styles.instructions}>
                   Logged in as
                   {"\n"}{firebaseApp.auth().currentUser.email}
                 </Text>
+                </Egg>
                 {firebaseApp.auth().currentUser.emailVerified
                   ?
                   <Text style={styles.instructions}>Verified: Yes </Text>
@@ -53,15 +69,19 @@ export default class AccDetails extends Component {
                   ?
                   null
                   :
-                  <Button onPress={this.sendVerifyEmail} title = 'did not get an email?'/>
+                  <Button onPress={this.sendVerifyEmail}
+                  buttonStyle ={styles.mainButtons}
+                  title = 'did not get an email?'/>
                 }
                 <Button
                   onPress={() => this.sendResetEmail()}
                   title="reset password"
+                  buttonStyle ={styles.mainButtons}
                 />
                 <Button
                   onPress={() => this.handleLogOut()}
                   title="logout"
+                  buttonStyle ={styles.mainButtons}
                 />
             </View>
         );

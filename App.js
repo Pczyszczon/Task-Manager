@@ -2,7 +2,7 @@ import firebaseApp from './src/firebase_config';
 import Login from './src/login';
 import Main from './src/main';
 import AccDetails from './src/AccDetails'
-import Screen1 from './screen1';
+import AdminScreen from './src/admin_screen';
 import CreateTask from './src/create_task';
 import {TabNavigator, StackNavigator, DrawerNavigator} from 'react-navigation';
 import { Icon } from 'react-native-elements';
@@ -45,7 +45,7 @@ export default class App extends Component {
   })
 
   export const test = StackNavigator({
-    screen1: { screen: Screen1 },
+    screen1: { screen: AdminScreen },
   })
 
   export const test1 = StackNavigator({

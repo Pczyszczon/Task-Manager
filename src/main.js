@@ -24,11 +24,11 @@ export default class Main extends Component{
 
   constructor(props) {
         super(props);
-        this.tasksRef = firebaseApp.database().ref("TaskManager/" + firebaseApp.auth().currentUser.uid);
         this.projectsRef = firebaseApp.database().ref("TaskManager/Projects/");
         this.userRef = firebaseApp.database().ref("TaskManager/Users/" + firebaseApp.auth().currentUser.uid);
         this.state = {
             tmp_hnadler: true,
+            project: null,
             email: firebaseApp.auth().currentUser.email,
             dataSource: [],
         };
@@ -36,7 +36,7 @@ export default class Main extends Component{
 
     static navigationOptions = function(props) {
       return {
-        title: 'Your tasks',
+        title: 'Project Tasks',
         headerLeft:
         <Icon
           onPress={() => props.navigation.navigate('DrawerOpen')}
@@ -47,18 +47,20 @@ export default class Main extends Component{
     }
 
   componentDidMount(){
-      // this.userRef.once("value", function(snapshot) {
-      //   if(snapshot.val().project == null){
-      //       this.setState({tmp_hnadler: false})
-      // }
-      // })
-      // this.state.tmp_hnadler == true ? this._listenTasks() : this._listenProjects();
-      this._listenProjects();
+      this.userRef.once("value", snapshot => {
+        if(snapshot.val() !== null){
+          this.setState({project: snapshot.val().project})
+        this.state.project !== null ? this._listenTasks() : this._listenProjects();
+     }
+    });
+    this.state.project !== null ? this._listenTasks() : this._listenProjects();
   }
 
+
   _listenTasks(){
-    var test = []
-    this.tasksRef.on('value', snapshot => {
+    var tasksRef = firebaseApp.database().ref("TaskManager/Projects/" + this.state.project);
+    var test = [];
+    tasksRef.on('value', snapshot => {
     snapshot.forEach((child) => {
       test.push({
         key: child.key,
@@ -86,18 +88,8 @@ export default class Main extends Component{
   }
 
   _renderItem(item){
-    // let rowType = null;
-    // this.userRef.once("value", function(snapshot) {
-    //     if(snapshot.val().project == null){
-    //         rowType = <ProjectListRow item = {item}/>
-    //
-    //     }
-    // else{
-    //     rowType = <Row item = {item}/>
-    // }
-    //  });
     return (
-        <ProjectListRow item = {item}/>
+        this.state.project !== null ? <Row item = {item}/> : <ProjectListRow item = {item}/>
     )
   }
 

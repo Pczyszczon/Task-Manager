@@ -3,7 +3,6 @@ import{
     StatusBar,
     Text,
     View,
-    Button,
     StyleSheet,
     Alert,
 } from 'react-native';
@@ -11,10 +10,8 @@ import{
 import {
   Input,
   Icon,
+  Button,
 } from 'react-native-elements';
-
-import Egg from 'react-native-egg';
-
 import firebaseApp from './firebase_config';
 import * as styles from './styles.js';
 
@@ -50,14 +47,8 @@ export default class Create extends Component{
         return(
             <View style = {styles.container}>
                 <StatusBar barStyle="light-content" />
-                <Egg
-                    setps={'TTT'}
-                    onCatch={() => {
-                        Alert.alert('You are a wizzard Harry');
-                    }}
-                >
+
                 <Text style = {styles.title}>Create</Text>
-                </Egg>
                 <Input onChangeText={(email) => {this.setState({email})}}
                            autoCapitalize = 'none'
                            returnKeyType = {'next'}

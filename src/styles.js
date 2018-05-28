@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
   },
 
   bugContainer: {
-        backgroundColor: "#679289",
+        backgroundColor: "#c43833",
         borderColor: "transparent",
         borderWidth: 0,
         borderRadius: 5,
@@ -47,16 +47,21 @@ const styles = StyleSheet.create({
   },
 
   taskContainer: {
-        backgroundColor: "#679289",
-        borderColor: "transparent",
+        backgroundColor: "#379634",
         borderWidth: 0,
         borderRadius: 5,
         marginTop: 5,
   },
 
   improvmentContainer: {
-        backgroundColor: "#BFDBF7",
-        borderColor: "transparent",
+        backgroundColor: "#00B9AE",
+        borderWidth: 0,
+        borderRadius: 5,
+        marginTop: 5,
+  },
+
+  projectContainer: {
+        backgroundColor: "#d67932",
         borderWidth: 0,
         borderRadius: 5,
         marginTop: 5,
@@ -64,6 +69,7 @@ const styles = StyleSheet.create({
 
   mainButtons: {
       backgroundColor: "#679289",
+      marginTop: 5,
   },
 
   viewStyle: {

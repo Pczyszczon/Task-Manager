@@ -25,7 +25,7 @@ export default class ProjectListRow extends Component {
                 onPress={() => {
                   this.addUserToSelectedProject();
                 }}
-                buttonStyle={styles.improvmentContainer}
+                buttonStyle={styles.projectContainer}
                 title = {this.props.item.project_name}
                  />
             )

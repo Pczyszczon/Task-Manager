@@ -7,7 +7,6 @@ import{
     ScrollView,
     StyleSheet,
 } from 'react-native';
-
 import firebaseApp from './firebase_config';
 import _ from  'lodash';
 
@@ -82,6 +81,7 @@ export default class Main extends Component{
        description: this.state.description.trim(),
      });
      this.setDefault();
+     alert('Task created!');
  }
 
 
@@ -157,6 +157,7 @@ export default class Main extends Component{
         <Button
           onPress = {this.sendToFireBase.bind(this)}
           title="Send"
+          buttonStyle ={styles.mainButtons}
         />
       </ScrollView>
     );
