@@ -45,6 +45,12 @@ export default class AccDetails extends Component {
         alert('You have become an admin!');
     }
 
+    swapProject(){
+        projectsRef = firebaseApp.database().ref("TaskManager/Users/" + firebaseApp.auth().currentUser.uid);
+        projectsRef.remove();
+        alert('You have removed yourself from current project! Go back to main screen to watch another');
+    }
+
     render(){
         return(
             <View style={styles.container}>
@@ -76,6 +82,11 @@ export default class AccDetails extends Component {
                 <Button
                   onPress={() => this.sendResetEmail()}
                   title="reset password"
+                  buttonStyle ={styles.mainButtons}
+                />
+                <Button
+                  onPress = {this.swapProject.bind(this)}
+                  title="Swap Project"
                   buttonStyle ={styles.mainButtons}
                 />
                 <Button

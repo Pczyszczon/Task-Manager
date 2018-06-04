@@ -72,6 +72,12 @@ const styles = StyleSheet.create({
       marginTop: 5,
   },
 
+  modalButtons: {
+      backgroundColor: "#679289",
+      marginTop: 10,
+      alignItems: 'flex-end',
+  },
+
   viewStyle: {
     flex: 1,
   },
@@ -91,7 +97,8 @@ modal: {
     justifyContent: 'space-between',
 },
 
-    popUp: {
+    modalText: {
+        fontSize: 30,
     },
 
 });

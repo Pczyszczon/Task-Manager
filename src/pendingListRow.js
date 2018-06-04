@@ -12,23 +12,25 @@ import {
 import * as styles from './styles.js';
 import firebaseApp from './firebase_config';
 
-export default class ProjectListRow extends Component {
+export default class PendingListRow extends Component {
 
-    addUserToPending(){
-        projectRef = firebaseApp.database().ref("TaskManager/Pending/");
-        projectRef.push({project: this.props.item.project_name,
-                        email: firebaseApp.auth().currentUser.email,
-                        uid: firebaseApp.auth().currentUser.uid,});
-        alert('Added to the project! Now wait for admin authorization');
+    addUser(){
+        projectRef = firebaseApp.database().ref("TaskManager/Users/" + this.props.item.uid);
+        projectRef.set({project: this.props.item.project_name});
+        alert('User request accepted');
+        pendingRef = firebaseApp.database().ref("TaskManager/Pending/" + this.props.item.key);
+        pendingRef.remove();
     }
     render() {
+
+            var who = this.props.item.email + ": " + this.props.item.project_name
             let project = (
                 <Button
                 onPress={() => {
-                  this.addUserToPending();
+                  this.addUser();
                 }}
                 buttonStyle={styles.projectContainer}
-                title = {this.props.item.project_name}
+                title = {who}
                  />
             )
             return (

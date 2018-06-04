@@ -7,12 +7,14 @@ import{
     ScrollView,
     StyleSheet,
     Alert,
+    FlatList,
 } from 'react-native';
 
 import firebaseApp from './firebase_config';
 import _ from  'lodash';
 
 import * as styles from './styles.js';
+import PendingListRow from './pendingListRow';
 
 import{
   Input,
@@ -32,9 +34,11 @@ export default class Screen1 extends Component{
     super(props);
     this.projectsRef = firebaseApp.database().ref("TaskManager/Users/" + firebaseApp.auth().currentUser.uid);
     this.adminRef = firebaseApp.database().ref("TaskManager/Admins/" + firebaseApp.auth().currentUser.uid);
+    this.pendingRef = firebaseApp.database().ref("TaskManager/Pending/");
     this.state = {
       project_name: "",
       admin: null,
+      dataSource: [],
     };
   }
 
@@ -56,6 +60,7 @@ export default class Screen1 extends Component{
           this.setState({admin: snapshot.val().admin})
      }
     });
+    this._listenPending()
   }
 
   handleCreate(){
@@ -69,6 +74,35 @@ export default class Screen1 extends Component{
       this.projectsRef.remove();
       alert('You have removed yourself from current project! Go back to main screen to watch another');
   }
+
+  _listenPending(){
+   var test = []
+   this.pendingRef.on('value', snapshot => {
+   snapshot.forEach((child) => {
+     test.push({
+         key: child.key,
+         email: child.val().email,
+         project_name: child.val().project,
+         uid: child.val().uid,
+     })
+   });
+   this.setState({dataSource: test})
+   });
+ }
+
+ _renderItem(item){
+   return (
+       <PendingListRow item = {item}/>
+   )
+ }
+
+  // Here we need users that added themselfs to Pending List
+  // Pending:
+  //    uid:
+  //        email: project_name
+  // after tap it will add user to
+  // Project:
+  //    uid: (...)
 
   render(){
     return(
@@ -84,12 +118,15 @@ export default class Screen1 extends Component{
             title="Create"
             buttonStyle ={styles.mainButtons}
           />
-          <Button
-            onPress = {this.swapProject.bind(this)}
-            title="Swap Project"
-            buttonStyle ={styles.mainButtons}
-          />
+          <Text style = {styles.instructions}>
+          Pending Users
+          </Text>
+          <FlatList
+           data={this.state.dataSource}
+           renderItem={({item}) => this._renderItem(item)}
+           />
         </View>
+
          :
          <View style = {styles.container}>
          <Text style ={styles.instructions}> Sorry, you are not admin </Text>

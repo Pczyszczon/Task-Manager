@@ -12,12 +12,16 @@ import {
   Button,
 } from 'react-native-elements';
 import * as styles from './styles.js';
+import firebaseApp from './firebase_config';
+
 export default class Row extends Component {
     constructor(props) {
           super(props);
+          this.userRef = firebaseApp.database().ref("TaskManager/Users/" + firebaseApp.auth().currentUser.uid);
           this.state = {
               modalVisible: false,
               scrollEnabled: true,
+              project: null,
           }
     };
 
@@ -27,6 +31,23 @@ export default class Row extends Component {
 
     closeModal() {
         this.setState({ modalVisible: false });
+    }
+
+    removeTask() {
+        if (firebaseApp.auth().currentUser.email == this.props.item.email){
+            this.userRef.once("value", snapshot => {
+              if(snapshot.val() !== null){
+                this.setState({project: snapshot.val().project})
+                tasksRef = firebaseApp.database().ref("TaskManager/Projects/" + this.state.project + "/" + this.props.item.key);
+                tasksRef.remove();
+                alert(tasksRef);
+                this.closeModal();
+           }
+          });
+        }
+        else {
+            alert('You are not author of a task!')
+        }
     }
 
 
@@ -95,7 +116,7 @@ export default class Row extends Component {
             else {
                 message = <Text>{this.props.item.title}</Text>
             }
-            var modalText = <Text>{this.props.item.description}</Text>
+            var modalText = <Text style = {styles.modalText}>{this.props.item.description}</Text>
             return (
                 <View>
                    <Modal
@@ -109,8 +130,16 @@ export default class Row extends Component {
                onPress={() => {
                  this.closeModal();
                }}
+               buttonStyle={styles.modalButtons}
                title = "close"
                />
+               <Button
+              onPress={() => {
+                this.removeTask();
+              }}
+              buttonStyle={styles.modalButtons}
+              title = "delete"
+              />
            </View>
          </View>
        </Modal>

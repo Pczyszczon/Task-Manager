@@ -58,17 +58,20 @@ export default class Main extends Component{
 
 
   _listenTasks(){
+    var project = this.state.project;
     var tasksRef = firebaseApp.database().ref("TaskManager/Projects/" + this.state.project);
     var test = [];
     tasksRef.on('value', snapshot => {
     snapshot.forEach((child) => {
       test.push({
+        email: child.val().email,
         key: child.key,
         title: child.val().title,
         description: child.val().description,
         bug: child.val().bug,
         improvment: child.val().improvment,
         task: child.val().task,
+        project_name: project,
       })
     });
     this.setState({dataSource: test})
